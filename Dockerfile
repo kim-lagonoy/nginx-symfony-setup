@@ -13,21 +13,6 @@ ENV php_conf /etc/php/7.0/fpm/php.ini
 ENV nginx_conf /etc/nginx/nginx.conf
 ENV supervisor_conf /etc/supervisor/supervisord.conf
 
-# Install wkhtmltopdf
-RUN mkdir /tmp/wkhtml && \
-    cd /tmp/wkhtml \
-    wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
-    tar vxf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
-    cp wkhtmltox/bin/wk* /usr/local/bin/ \
-    rm -rf /tmp/wkhtml
-RUN apt-get install libssl1.0.0=1.0.2g-1ubuntu4
-RUN apt-get install libssl-dev=1.0.2g-1ubuntu4
-
-# Enable php-fpm on nginx virtualhost configuration
-COPY nginx/default ${nginx_vhost}
-RUN sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${php_conf} && \
-    echo "\ndaemon off;" >> ${nginx_conf}
-
 # Install composer
 RUN mkdir /tmp/composer/ && \
     cd /tmp/composer && \
