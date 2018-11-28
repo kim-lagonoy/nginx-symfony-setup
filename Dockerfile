@@ -59,4 +59,4 @@ CMD /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
 CMD ["nginx"]
 
 # Expose port 80 and 443.
-EXPOSE 80 443 8000
+EXPOSE 80 443
