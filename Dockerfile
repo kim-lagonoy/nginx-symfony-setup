@@ -25,7 +25,6 @@ RUN apt-get update
 RUN apt-get install -y libssl-dev=1.0.2g-1ubuntu4
 
 # Enable php-fpm on nginx virtualhost configuration
-#COPY nginx/default ${nginx_vhost}
 ADD nginx.conf ${nginx_conf}
 ADD hireplicity.conf ${nginx_vhost}
 RUN sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${php_conf} && \
