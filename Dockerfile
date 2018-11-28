@@ -27,6 +27,7 @@ RUN apt-get install -y libssl-dev=1.0.2g-1ubuntu4
 # Enable php-fpm on nginx virtualhost configuration
 ADD nginx.conf ${nginx_conf}
 ADD hireplicity.conf ${nginx_vhost}
+ADD start.sh /start.sh
 RUN sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${php_conf} && \
     echo "\ndaemon off;" >> ${nginx_conf}
 
@@ -49,15 +50,15 @@ RUN chmod -R 775 /var/www/html
 RUN mkdir /mnt/hireplicity
 RUN mkdir /etc/hireplicity
 RUN mkdir /etc/hireplicity/resumes
+RUN mkdir /etc/hireplicity/backup
 
 # Volume configuration
 VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
 
 # Configure Services and Port
-RUN service php7.0-fpm start
-RUN service postgresql start
 CMD ["/usr/bin/supervisord", "-n"]
 CMD ["nginx"]
+#CMD ["bash", "/start.sh"];
 
 # Expose port 80 and 443.
 EXPOSE 80 443
