@@ -44,6 +44,7 @@ RUN mkdir /tmp/composer/ && \
 RUN mkdir -p /run/php && \
     chown -R www-data:www-data /var/www/html && \
     chown -R www-data:www-data /run/php
+RUN chmod -R 775 /var/www/html
 
 # Create file storage
 RUN mkdir /mnt/hireplicity
@@ -54,9 +55,8 @@ RUN mkdir /etc/hireplicity/resumes
 VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
 
 # Configure Services and Port
-CMD service php7.0-fpm start
-CMD service postgresql start
-#CMD /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+RUN service php7.0-fpm start
+RUN service postgresql start
 CMD ["/usr/bin/supervisord", "-n"]
 CMD ["nginx"]
 
