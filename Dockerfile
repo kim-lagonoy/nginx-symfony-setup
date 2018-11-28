@@ -45,7 +45,6 @@ RUN mkdir -p /run/php && \
     chown -R www-data:www-data /var/www/html && \
     chown -R www-data:www-data /run/php
 RUN chmod -R 775 /var/www/html
-RUN chmod -R 755 /start.sh
 
 # Create file storage
 RUN mkdir /mnt/hireplicity
@@ -57,9 +56,9 @@ RUN mkdir /etc/hireplicity/backup
 VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
 
 # Configure Services and Port
+CMD ["/usr/bin/supervisord", "-n"]
 CMD ["nginx"]
-CMD ["/start.sh"];
+#CMD ["bash", "/start.sh"];
 
 # Expose port 80 and 443.
 EXPOSE 80 443
-
