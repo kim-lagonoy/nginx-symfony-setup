@@ -1,2 +1,3 @@
-service php7.0-fpm start
+#!/usr/bin/env bash
+
 service postgresql start
