@@ -47,7 +47,8 @@ RUN mkdir -p /run/php && \
 
 # Create file storage
 RUN mkdir /mnt/hireplicity
-RUN mkdir /mnt/hireplicity/resumes
+RUN mkdir /etc/hireplicity
+RUN mkdir /etc/hireplicity/resumes
 
 # Volume configuration
 VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
@@ -55,7 +56,8 @@ VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/v
 # Configure Services and Port
 CMD service php7.0-fpm start
 CMD service postgresql start
-CMD /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+#CMD /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+CMD ["/usr/bin/supervisord", "-n"]
 CMD ["nginx"]
 
 # Expose port 80 and 443.
