@@ -55,10 +55,8 @@ RUN mkdir /etc/hireplicity/backup
 # Volume configuration
 VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
 
-# Configure Services and Port
-CMD ["/usr/bin/supervisord", "-n"]
-CMD ["nginx"]
-#CMD ["bash", "/start.sh"];
+# Run start script
+CMD ["bash", "/start.sh"];
 
 # Expose port 80 and 443.
 EXPOSE 80 443
