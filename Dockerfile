@@ -10,6 +10,8 @@ RUN apt-get clean
 #Define the ENV variable
 ENV php_conf /etc/php/7.0/fpm/php.ini
 ENV supervisor_conf /etc/supervisor/supervisord.conf
+ENV nginx_conf /etc/nginx/nginx.conf
+ENV nginx_vhost /etc/nginx/sites-available/default
 
 # Install wkhtmltopdf
 RUN mkdir /tmp/wkhtml && \
@@ -49,7 +51,7 @@ RUN mkdir /etc/hireplicity/resumes
 RUN mkdir /etc/hireplicity/backup
 
 # Volume configuration
-VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/", "/var/www/html"]
+VOLUME [${nginx_vhost}, ${nginx_conf}, "/var/www/html"]
 
 # Run start script
 CMD ["bash", "/start.sh"];
