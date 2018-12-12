@@ -8,9 +8,7 @@ RUN apt-get -y install ssmtp
 RUN apt-get clean
 
 #Define the ENV variable
-ENV nginx_vhost /etc/nginx/sites-available/default
 ENV php_conf /etc/php/7.0/fpm/php.ini
-ENV nginx_conf /etc/nginx/nginx.conf
 ENV supervisor_conf /etc/supervisor/supervisord.conf
 
 # Install wkhtmltopdf
@@ -25,8 +23,6 @@ RUN apt-get update
 RUN apt-get install -y libssl-dev=1.0.2g-1ubuntu4
 
 # Enable php-fpm on nginx virtualhost configuration
-ADD nginx.conf ${nginx_conf}
-ADD hireplicity.conf ${nginx_vhost}
 ADD start.sh /start.sh
 RUN sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${php_conf} && \
     echo "\ndaemon off;" >> ${nginx_conf}
@@ -53,7 +49,7 @@ RUN mkdir /etc/hireplicity/resumes
 RUN mkdir /etc/hireplicity/backup
 
 # Volume configuration
-VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/", "/var/www/html"]
 
 # Run start script
 CMD ["bash", "/start.sh"];
